@@ -6,3 +6,4 @@ Holder for my Spring 2024 notes and assignments
 
 * [Linear Regression](Lab1_linear_regression_Shrey_Kharbanda.ipynb)
 * [Logistic Regression](Lab2-titanic.ipynb)
+* [Neural Networks/Multi-Layer Perceptron Model](tp_mlp_student2_shrey.ipnyb)
