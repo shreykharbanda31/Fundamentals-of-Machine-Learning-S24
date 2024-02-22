@@ -1,4 +1,4 @@
-# F24 - CSCI-UA 9479 Fundamentals of Machine Learning
+# S24 - CSCI-UA 9479 Fundamentals of Machine Learning
 
 Holder for my Spring 2024 notes and assignments
 
