@@ -9,7 +9,7 @@ from torch import nn as nn
 from torch.nn import functional as F
 
 
-class ActorModel(nn.Module):
+class ActorModelV0(nn.Module):
     """Deep neural network."""
 
     # By default, use CPU
@@ -17,10 +17,10 @@ class ActorModel(nn.Module):
 
     def __init__(self):
         """Initialize model."""
-        super(ActorModel, self).__init__()
+        super(ActorModelV0, self).__init__()
         # ---> TODO: change input and output sizes depending on the environment
-        input_size = 0
-        nb_actions = 0
+        input_size = 4
+        nb_actions = 2
 
         # Build layer objects
         self.fc0 = nn.Linear(input_size, 128)

@@ -5,11 +5,11 @@ Author: Elie KADOCHE.
 
 from numpy.random import default_rng
 
-from src.envs.cartpole import CartpoleEnv
+from src.envs.cartpole_v0 import CartpoleEnvV0
 
 if __name__ == "__main__":
     # Create environment
-    env = CartpoleEnv()
+    env = CartpoleEnvV0()
 
     # Create random generator
     generator = default_rng(seed=None)

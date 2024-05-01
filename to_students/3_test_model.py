@@ -5,20 +5,30 @@ Author: Elie KADOCHE.
 
 import torch
 
-from src.envs.cartpole import CartpoleEnv
-from src.models.actor import ActorModel
+from src.envs.cartpole_v0 import CartpoleEnvV0
+from src.envs.cartpole_v1 import CartpoleEnvV1
+from src.models.actor_v0 import ActorModelV0
+from src.models.actor_v1 import ActorModelV1
 
 if __name__ == "__main__":
-    # Create policy
-    policy = ActorModel()
+    # Create environment and policy
+    env = CartpoleEnvV0()
+    policy = ActorModelV0()
+    actor_path = "./saved_models/actor_0.pt"
+
+    # ------------------------------------------
+    # ---> TODO: UNCOMMENT FOR SECTION 4 ONLY
+    # env = CartpoleEnvV1()
+    # policy = ActorModelV1()
+    # actor_path = "./saved_models/actor_1.pt"
+    # ------------------------------------------
+
+    # Testing mode
     policy.eval()
     print(policy)
 
     # Load the trained policy
-    policy = torch.load("models/actor_0.pt")
-
-    # Create environment
-    env = CartpoleEnv()
+    policy = torch.load(actor_path)
 
     # Reset it
     total_reward = 0.0
@@ -32,7 +42,7 @@ if __name__ == "__main__":
         probabilities = policy(state)
 
         # ---> TODO: how to select an action
-        action = 0
+        action = None
 
         # One step forward
         state, reward, terminated, _, _ = env.step(action)

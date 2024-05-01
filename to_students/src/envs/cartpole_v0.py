@@ -8,7 +8,7 @@ from gymnasium import spaces
 from gymnasium.utils import seeding
 
 
-class CartpoleEnv(gym.Env):
+class CartpoleEnvV0(gym.Env):
     """Cartpole environment."""
 
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 60}
@@ -68,10 +68,6 @@ class CartpoleEnv(gym.Env):
         # No modifications
         processed_state = self.state
 
-        # ---> TODO: remove accelerations from state
-
-        # ---> TODO: if no accelerations, determine a new working state
-
         return processed_state
 
     def reset(self, seed=None, options=None):
@@ -96,8 +92,6 @@ class CartpoleEnv(gym.Env):
         # Reset state
         self.state = self.np_random.uniform(low=-0.05, high=0.05, size=(4,))
         self.state = self.state.astype(np.float32)
-
-        # ---> TODO: if no accelerations, determine a new working state
 
         # Eventually render
         if self.render_mode == "human":
@@ -153,8 +147,6 @@ class CartpoleEnv(gym.Env):
             x = x + self.tau * x_dot
             theta_dot = theta_dot + self.tau * thetaacc
             theta = theta + self.tau * theta_dot
-
-        # ---> TODO: if no accelerations, determine a new working state
 
         # Full system state
         self.state = np.array([

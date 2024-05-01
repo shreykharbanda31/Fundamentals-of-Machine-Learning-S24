@@ -7,34 +7,41 @@ import torch
 from torch import optim as optim
 from torch.distributions import Categorical
 
-from src.envs.cartpole import CartpoleEnv
-from src.models.actor import ActorModel
-
-# Policy model path
-ACTOR_PATH = "models/actor_0.pt"
+from src.envs.cartpole_v0 import CartpoleEnvV0
+from src.envs.cartpole_v1 import CartpoleEnvV1
+from src.models.actor_v0 import ActorModelV0
+from src.models.actor_v1 import ActorModelV1
 
 # Maximum environment length
 HORIZON = 500
 
 # ---> TODO: change the discount factor to solve the problem
-DISCOUNT_FACTOR = 0.8
+DISCOUNT_FACTOR = 0.1
 
 # ---> TODO: change the learning rate to solve the problem
 LEARNING_RATE = 0.1
 
 if __name__ == "__main__":
-    # Create policy
-    actor = ActorModel()
-    actor.train()
+    # Create environment and policy
+    env = CartpoleEnvV0()
+    actor = ActorModelV0()
+    actor_path = "./saved_models/actor_0.pt"
 
-    # Create the environment
-    env = CartpoleEnv()
+    # ------------------------------------------
+    # ---> TODO: UNCOMMENT FOR SECTION 4 ONLY
+    # env = CartpoleEnvV1()
+    # actor = ActorModelV1()
+    # actor_path = "./saved_models/actor_1.pt"
+    # ------------------------------------------
+
+    # Training mode
+    actor.train()
+    print(actor)
 
     # Create optimizer with the policy parameters
     actor_optimizer = optim.Adam(actor.parameters(), lr=LEARNING_RATE)
 
     # ---> TODO: when do we stop the training?
-    running_reward = 0.0
 
     # Run infinitely many episodes
     training_iteration = 0
@@ -122,7 +129,6 @@ if __name__ == "__main__":
         episode_total_reward = sum(saved_rewards)
 
         # ---> TODO: when do we stop the training?
-        running_reward = episode_total_reward
 
         # Log results
         log_frequency = 5
@@ -130,8 +136,10 @@ if __name__ == "__main__":
         if training_iteration % log_frequency == 0:
 
             # Save neural network
-            torch.save(actor, ACTOR_PATH)
+            torch.save(actor, actor_path)
 
             # Print results
             print("iteration {} - last reward: {:.2f}".format(
                 training_iteration, episode_total_reward))
+
+            # ---> TODO: when do we stop the training?
