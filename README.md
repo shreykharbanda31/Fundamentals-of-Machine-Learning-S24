@@ -13,4 +13,10 @@ Holder for my Spring 2024 notes and assignments
 * [PCA](tp_pca_student11_shrey.ipynb)
 * [Anomaly Detection](anomaly_detection_student2_shrey.ipynb)
 * [ML Project](Lab5-avazu-student_Shrey.ipynb)
+* [Natural Language Processing](TP_Sentiment_Analysis_Neural_Models_NYU.ipynb)
+* [Reinforcement Learning Project](Shrey-Kharbanda-RL-Project-May-13-Submission.zip)
+
+# Reinforcement Learning Cheatsheet for Finals:
+
+* [Cheatsheet](Reinforcement-Learning-Cheatsheet.pdf)
 

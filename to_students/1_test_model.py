@@ -9,6 +9,7 @@ from src.envs.cartpole_v0 import CartpoleEnvV0
 from src.envs.cartpole_v1 import CartpoleEnvV1
 from src.models.actor_v0 import ActorModelV0
 from src.models.actor_v1 import ActorModelV1
+import numpy as np
 
 if __name__ == "__main__":
     # Create environment and policy
@@ -17,8 +18,8 @@ if __name__ == "__main__":
 
     # ------------------------------------------
     # ---> TODO: UNCOMMENT FOR SECTION 4 ONLY
-    # env = CartpoleEnvV1()
-    # policy = ActorModelV1()
+    env = CartpoleEnvV1()
+    policy = ActorModelV1()
     # ------------------------------------------
 
     # Testing mode
@@ -37,7 +38,15 @@ if __name__ == "__main__":
         probabilities = policy(state)
 
         # ---> TODO: how to select an action
-        action = torch.argmax(probabilities).item()
+        epsilon = 0.1  # Exploration parameter
+
+        # Randomly choose between exploration or exploitation
+        if np.random.rand() < epsilon:
+            action = env.action_space.sample()  # Random action from the space
+        else:
+            # Get the action with the highest probability from the policy
+            action = torch.argmax(policy(state)).item()
+
 
         # One step forward
         state, reward, terminated, _, _ = env.step(action)

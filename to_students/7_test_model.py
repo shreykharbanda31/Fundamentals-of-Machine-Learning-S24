@@ -7,6 +7,7 @@ import torch
 
 from src.envs.cartpole_v0 import CartpoleEnvV0
 from src.models.actor_v1 import ActorModelV1
+import numpy as np
 
 if __name__ == "__main__":
     # Create policy
@@ -15,7 +16,7 @@ if __name__ == "__main__":
     print(policy)
 
     # Load the trained policy
-    policy = torch.load("./saved_models/actor_3.pt")
+    policy = torch.load("/Users/shreykharbanda/Downloads/ML Spring 2024/to_students/saved_models/actor_3.pt")
 
     # Create environment
     env = CartpoleEnvV0()
@@ -32,7 +33,14 @@ if __name__ == "__main__":
         probabilities = policy(state)
 
         # ---> TODO: how to select an action
-        action = None
+        epsilon = 0.1  # Exploration parameter
+
+        # Randomly choose between exploration or exploitation
+        if np.random.rand() < epsilon:
+            action = env.action_space.sample()  # Random action from the space
+        else:
+            # Get the action with the highest probability from the policy
+            action = torch.argmax(policy(state)).item()
 
         # One step forward
         state, reward, terminated, _, _ = env.step(action)

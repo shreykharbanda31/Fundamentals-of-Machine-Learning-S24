@@ -19,8 +19,12 @@ class ActorModelV1(nn.Module):
         """Initialize model."""
         super(ActorModelV1, self).__init__()
         # ---> TODO: change input and output sizes depending on the environment
-        input_size = 0
-        nb_actions = 0
+        
+        # For the first subpart I chose input size 2, but after finding the alternatives to acceleration
+        # I set input size = 4, nb_actions remain the same
+        
+        input_size = 4
+        nb_actions = 2
 
         # Build layer objects
         self.fc0 = nn.Linear(input_size, 128)

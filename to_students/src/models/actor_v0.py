@@ -19,7 +19,9 @@ class ActorModelV0(nn.Module):
         """Initialize model."""
         super(ActorModelV0, self).__init__()
         # ---> TODO: change input and output sizes depending on the environment
+        # The state space is 4-dim in our cartpole environment
         input_size = 4
+        #The action space includes two actions in our cartpole environment
         nb_actions = 2
 
         # Build layer objects

@@ -31,6 +31,10 @@ class CartpoleEnvV1(gym.Env):
         self.tau = 0.02  # Seconds between state updates
         self.kinematics_integrator = "euler"
 
+        # storing prev state's x and theta for calculation
+        self.prev_x = 0
+        self.prev_theta = 0
+
         # Angle at which to fail the episode
         self.theta_threshold_radians = 12 * 2 * math.pi / 360
         self.x_threshold = 2.4
@@ -69,8 +73,16 @@ class CartpoleEnvV1(gym.Env):
         processed_state = np.array([self.state[0], self.state[2]])
 
         # ---> TODO: if no accelerations, determine a new working state
-
+        x_tmp = self.state
+        x, theta = x_tmp[0], x_tmp[2]
+        # Calculating relative velocities to add to the new working state
+        x_dot = (x - self.prev_x) / self.tau  # velocity of the cart
+        theta_dot = (theta - self.prev_theta) / self.tau  # angular velocity of the pole
+        self.prev_x = x  # Storing current state for next step's velocity calculation
+        self.prev_theta = theta
+        processed_state = np.array([x, x_dot, theta, theta_dot], dtype=np.float32)
         return processed_state
+
 
     def reset(self, seed=None, options=None):
         """Reset the environment.
